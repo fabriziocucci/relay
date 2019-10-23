@@ -21,9 +21,9 @@ const {
   createOperationDescriptor,
   Environment,
   getRequest,
+  getRequestIdentifier,
   Observable,
   ReplaySubject,
-  getRequestIdentifier,
 } = require('relay-runtime');
 
 import type {
