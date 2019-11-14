@@ -13,12 +13,8 @@
 
 'use strict';
 
-<<<<<<< HEAD:packages/relay-experimental/preloadQuery_DEPRECATED.js
 const ExecutionEnvironment = require('./ExecutionEnvironment');
 const PreloadableQueryRegistry = require('./PreloadableQueryRegistry');
-=======
-const ExecutionEnvironment = require('fbjs/lib/ExecutionEnvironment');
->>>>>>> Add exports to relay-runtime to make available in relay-experimental:packages/relay-experimental/preloadQuery.js
 
 const invariant = require('invariant');
 
@@ -28,10 +24,6 @@ const {
   getRequest,
   Observable,
   ReplaySubject,
-<<<<<<< HEAD:packages/relay-experimental/preloadQuery_DEPRECATED.js
-=======
-  createOperationDescriptor,
->>>>>>> Add exports to relay-runtime to make available in relay-experimental:packages/relay-experimental/preloadQuery.js
   getRequestIdentifier,
 } = require('relay-runtime');
 
@@ -67,11 +59,8 @@ type PendingQueryEntry =
       fetchKey: ?string | ?number,
       fetchPolicy: PreloadFetchPolicy,
       kind: 'network',
-<<<<<<< HEAD:packages/relay-experimental/preloadQuery_DEPRECATED.js
       name: string,
       status: PreloadQueryStatus,
-=======
->>>>>>> Add exports to relay-runtime to make available in relay-experimental:packages/relay-experimental/preloadQuery.js
       subject: ReplaySubject<GraphQLResponse>,
       subscription: Subscription,
     |}>
@@ -205,7 +194,6 @@ function preloadQueryDeduped<TQuery: OperationType>(
       params,
       variables,
     );
-<<<<<<< HEAD:packages/relay-experimental/preloadQuery_DEPRECATED.js
     const source = network.execute(
       params,
       variables,
@@ -213,9 +201,6 @@ function preloadQueryDeduped<TQuery: OperationType>(
       null,
       logRequestInfo,
     );
-=======
-    const source = network.execute(params, variables, {}, null, logRequestInfo);
->>>>>>> Add exports to relay-runtime to make available in relay-experimental:packages/relay-experimental/preloadQuery.js
     const subject = new ReplaySubject();
     nextQueryEntry = {
       cacheKey,

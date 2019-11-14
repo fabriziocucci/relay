@@ -18,7 +18,10 @@ jest.mock('../ExecutionEnvironment', () => ({
 }));
 
 const preloadQuery_DEPRECATED = require('../preloadQuery_DEPRECATED');
+<<<<<<< HEAD:packages/relay-experimental/__tests__/preloadQuery_DEPRECATED-test.js
 const PreloadableQueryRegistry = require('../PreloadableQueryRegistry');
+=======
+>>>>>>> Internally deprecate and isolate current implementation of preloadQuery:packages/relay-experimental/__tests__/preloadQuery-test.js
 
 const {
   Environment,
@@ -247,7 +250,11 @@ describe('store-or-network', () => {
     check.mockClear();
     PreloadableQueryRegistry.set(query.params.id, query);
 
+<<<<<<< HEAD:packages/relay-experimental/__tests__/preloadQuery_DEPRECATED-test.js
     const preloaded = preloadQuery_DEPRECATED(environment, params, variables);
+=======
+    const preloaded = preloadQuery_DEPRECATED(environment, query, variables);
+>>>>>>> Internally deprecate and isolate current implementation of preloadQuery:packages/relay-experimental/__tests__/preloadQuery-test.js
     expect(preloaded.source).toBe(null);
     expect(preloaded.status).toEqual({
       cacheConfig: {force: true},
@@ -259,11 +266,18 @@ describe('store-or-network', () => {
     expect(preloaded.source).toBe(null);
   });
 
+<<<<<<< HEAD:packages/relay-experimental/__tests__/preloadQuery_DEPRECATED-test.js
   it('resolves from cache with cacheTime if data and query are available and operation is in the release buffer', () => {
     const disposable = environment.retain(operation);
     disposable.dispose();
     const fetchTime = Date.now();
     jest.spyOn(global.Date, 'now').mockImplementation(() => fetchTime);
+=======
+  it('resolves from cache if data & query become available after previously fetching', () => {
+    preloadQuery_DEPRECATED(environment, params, variables);
+    fetch.mockClear();
+
+>>>>>>> Internally deprecate and isolate current implementation of preloadQuery:packages/relay-experimental/__tests__/preloadQuery-test.js
     environment.commitPayload(operation, response.data);
     expect(environment.check(operation)).toEqual({
       status: 'available',
@@ -273,12 +287,15 @@ describe('store-or-network', () => {
     PreloadableQueryRegistry.set(query.params.id, query);
 
     const preloaded = preloadQuery_DEPRECATED(environment, params, variables);
+<<<<<<< HEAD:packages/relay-experimental/__tests__/preloadQuery_DEPRECATED-test.js
     expect(preloaded.source).toBe(null);
     expect(preloaded.status).toEqual({
       cacheConfig: {force: true},
       source: 'cache',
       cacheTime: fetchTime,
     });
+=======
+>>>>>>> Internally deprecate and isolate current implementation of preloadQuery:packages/relay-experimental/__tests__/preloadQuery-test.js
     expect(check).toBeCalledTimes(1);
     expect(fetch).toBeCalledTimes(0);
     expect(preloaded.source).toBe(null);
@@ -292,6 +309,7 @@ describe('store-or-network', () => {
     });
     check.mockClear();
 
+<<<<<<< HEAD:packages/relay-experimental/__tests__/preloadQuery_DEPRECATED-test.js
     const preloaded = preloadQuery_DEPRECATED(environment, query, variables);
     expect(preloaded.source).toBe(null);
     expect(preloaded.status).toEqual({
@@ -301,6 +319,10 @@ describe('store-or-network', () => {
     });
     expect(check).toBeCalledTimes(1);
     expect(fetch).toBeCalledTimes(0);
+=======
+    preloadQuery_DEPRECATED(environment, params, variables);
+    const preloaded = preloadQuery_DEPRECATED(environment, params, variables);
+>>>>>>> Internally deprecate and isolate current implementation of preloadQuery:packages/relay-experimental/__tests__/preloadQuery-test.js
     expect(preloaded.source).toBe(null);
   });
 
