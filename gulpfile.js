@@ -64,7 +64,7 @@ const PRODUCTION_HEADER = `/**
  */
 `;
 
-const buildDist = function (filename, opts, isProduction) {
+const buildDist = function(filename, opts, isProduction) {
   const webpackOpts = {
     externals: [/^[-/a-zA-Z0-9]+$/, /^@babel\/.+$/],
     target: opts.target,
@@ -95,7 +95,7 @@ const buildDist = function (filename, opts, isProduction) {
       minimize: true,
     };
   }
-  return webpackStream(webpackOpts, webpack, function (err, stats) {
+  return webpackStream(webpackOpts, webpack, function(err, stats) {
     if (err) {
       throw new gulpUtil.PluginError('webpack', err);
     }
@@ -247,7 +247,7 @@ const builds = [
 
 const modules = gulp.parallel(
   ...builds.map(
-    (build) =>
+    build =>
       function modulesTask() {
         return gulp
           .src(INCLUDE_GLOBS, {
@@ -273,7 +273,7 @@ const copyRelayExperimental = [
 ];
 const flowDefs = gulp.parallel(
   ...builds.map(
-    (build) =>
+    build =>
       function modulesTask() {
         return gulp
           .src(['**/*.js', '!**/__tests__/**/*.js', '!**/__mocks__/**/*.js'], {
@@ -286,7 +286,7 @@ const flowDefs = gulp.parallel(
 );
 
 const copyFilesTasks = [];
-builds.forEach((build) => {
+builds.forEach(build => {
   copyFilesTasks.push(
     function copyLicense() {
       return gulp
@@ -320,13 +320,15 @@ const exportsFiles = gulp.series(
   copyRelayExperimental,
   gulp.parallel(
     ...builds.map(
-      (build) =>
+      build =>
         function exportsFilesTask(done) {
-          Object.keys(build.exports).map((exportName) =>
+          Object.keys(build.exports).map(exportName =>
             fs.writeFileSync(
               path.join(DIST, build.package, exportName + '.js'),
               PRODUCTION_HEADER +
-                `\nmodule.exports = require('./lib/${build.exports[exportName]}');\n`,
+                `\nmodule.exports = require('./lib/${
+                  build.exports[exportName]
+                }');\n`,
             ),
           );
           done();
@@ -336,9 +338,9 @@ const exportsFiles = gulp.series(
 );
 
 const binsTasks = [];
-builds.forEach((build) => {
+builds.forEach(build => {
   if (build.bins) {
-    build.bins.forEach((bin) => {
+    build.bins.forEach(bin => {
       binsTasks.push(function binsTask() {
         return gulp
           .src(path.join(DIST, build.package, 'lib', 'bin', bin.entry))
@@ -353,8 +355,8 @@ builds.forEach((build) => {
 const bins = gulp.series(binsTasks);
 
 const bundlesTasks = [];
-builds.forEach((build) => {
-  build.bundles.forEach((bundle) => {
+builds.forEach(build => {
+  build.bundles.forEach(bundle => {
     bundlesTasks.push(function bundleTask() {
       return gulp
         .src(path.join(DIST, build.package, 'lib', bundle.entry))
@@ -369,8 +371,8 @@ builds.forEach((build) => {
 const bundles = gulp.series(bundlesTasks);
 
 const bundlesMinTasks = [];
-builds.forEach((build) => {
-  build.bundles.forEach((bundle) => {
+builds.forEach(build => {
+  build.bundles.forEach(bundle => {
     bundlesMinTasks.push(function bundlesMinTask() {
       return gulp
         .src(path.join(DIST, build.package, 'lib', bundle.entry))
@@ -399,7 +401,7 @@ const setExperimentalVersion = async () => {
     throw new Error('Expected the RELEASE_COMMIT_SHA env variable to be set.');
   }
   const packages = ['react-relay'];
-  packages.forEach((pkg) => {
+  packages.forEach(pkg => {
     const pkgJsonPath = path.join('.', 'dist', pkg, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
     packageJson.version = VERSION;
