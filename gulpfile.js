@@ -261,17 +261,6 @@ const modules = gulp.parallel(
   ),
 );
 
-const copyRelayExperimental = [
-  function copyRelayExperimental() {
-    return gulp
-      .src(INCLUDE_GLOBS, {
-        cwd: path.join(PACKAGES, 'relay-experimental'),
-      })
-      .pipe(once())
-      .pipe(babel(babelOptions))
-      .pipe(gulp.dest(path.join(DIST, 'react-relay', 'lib', 'relay-experimental')));
-  }
-];
 const flowDefs = gulp.parallel(
   ...builds.map(
     build =>
